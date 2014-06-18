@@ -32,4 +32,11 @@ router.delete('/deleteuser/:id', function(req, res) {
     });
 });
 
+// /* GET posts listing. */
+// router.get('/posts', function(req, res) {
+//     var items = [{'hey':'you'},{'hey':'me'}] ;
+//     res.json(items);
+// });
+
+
 module.exports = router;
