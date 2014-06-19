@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
 	 "info": "rq3.info",
 	 "btns": ["yes", "no"],
 	 "motivation": "m3"
-	}]}
+	}]};
     res.json(items);
 });
 
@@ -61,7 +61,7 @@ router.get('/1', function(req, res) {
 	 "btns": ["yes", "no"],
 	 "motivation": "m3"
 	}]
-                }
+                };
     res.json(items);
 });
 
@@ -92,7 +92,7 @@ router.get('/2', function(req, res) {
 	 "btns": ["yes", "no"],
 	 "motivation": "i2.m3"
 	}]
-                }
+                };
     res.json(items);
 });
 
