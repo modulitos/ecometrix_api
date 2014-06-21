@@ -62,7 +62,7 @@ router.get('/verify', function(req, res) {
     console.log("userinfo: " + req.query.username);
     console.log("userinfo: " + req.query.password);
 
-    res.send({msg: "all done with verification!"});
+    res.send({msg: "Hi " + req.query.username + "! All done with verification!"});
     // res.send(
     //     (err === null) ? { msg: 'Done with verfications' } : { msg: err }
     // );
