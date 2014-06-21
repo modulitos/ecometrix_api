@@ -11,6 +11,7 @@ var db = mongo.db("mongodb://localhost:27017/nodetest2", {native_parser:true});
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
+var login = require('./routes/login');
 
 var app = express();
 
@@ -21,6 +22,8 @@ app.set('view engine', 'jade');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
+// app.use(express.json());
+// app.use(express.bodyParser());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,6 +38,15 @@ app.use(function(req,res,next){
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
+app.use('/login', login);
+
+//
+// app.configure(function () {
+  // app.use(express.static(__dirname + '/static'));
+  // app.use(express.bodyParser());
+  // app.use(app.router);
+// });
+//
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
