@@ -49,20 +49,40 @@ router.get('/verify', function(req, res) {
     var db = req.db;
     console.log("verifying...");
     var users = {"data": [
-	{"username": "luke",
+	{"username": "lucas",
 	 "name": "luke", 
 	 "last": "swart",
-	 "password": "1234"
+	 "password": "81dc9bdb52d04dc20036dbd8313ed055"//1234
 	},
-	{"username": "mike",
+	{"username": "mtshomsky",
 	 "name": "mike", 
 	 "last": "shomsky",
-	 "password": "0000"
+	 "password": "4a7d1ed414474e4033ac29ccb8653d9b"//0000
 	}]};
-    console.log("userinfo: " + req.query.username);
-    console.log("userinfo: " + req.query.password);
+    var username = req.query.username;
+    console.log("userinfo: " + username);
+    var password = req.query.password; // md5 checksum
+    console.log("userinfo: " + password);
 
-    res.send({msg: "Hi " + req.query.username + "! All done with verification!"});
+//    var db = req.db;
+//    db.collection('userlist').find().toArray(function (err, items) {
+//        res.json(items);
+//    });
+    var msg = "hi " + username + "! Welcome to Ecometrix";
+    if (username == "lucas" && password == "81dc9bdb52d04dc20036dbd8313ed055") {
+        console.log("lucas verified!");
+        msg = '';
+    }
+    else if (password == "4a7d1ed414474e4033ac29ccb8653d9b" && username == "mtshomsky") {
+        console.log("mike verified!");
+        msg = '';
+    }
+    else {
+        msg = 'username/password not verified.';
+        console.log("password not verified!");
+    }
+
+    res.send({msg: msg});
     // res.send(
     //     (err === null) ? { msg: 'Done with verfications' } : { msg: err }
     // );
