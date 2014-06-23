@@ -106,7 +106,7 @@ router.get('/verify', function(req, res) {
 router.post('/adduser', function(req, res) {
     var db = req.db;
     var body = req.body;
-    console.log("body is: ");
+    console.log("adding new user: ");
     console.log(body);
     db.collection('userlist').insert(body, function(err, result) {
         res.send(
