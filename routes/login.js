@@ -1,3 +1,6 @@
+/**
+ * Created by lucas on 6/19/14.
+ */
 var express = require('express');
 var router = express.Router();
 
@@ -48,56 +51,48 @@ var router = express.Router();
 router.get('/verify', function(req, res) {
     var db = req.db;
     console.log("verifying...");
-    var users = {"data": [
-	{"username": "lucas",
-	 "name": "luke", 
-	 "last": "swart",
-	 "password": "81dc9bdb52d04dc20036dbd8313ed055"//1234
-	},
-	{"username": "mtshomsky",
-	 "name": "mike", 
-	 "last": "shomsky",
-	 "password": "4a7d1ed414474e4033ac29ccb8653d9b"//0000
-	}]};
+    // get request info
     var username = req.query.username;
-    console.log("userinfo: " + username);
+    console.log("request's username: " + username);
     var password = req.query.password; // md5 checksum
-    console.log("userinfo: " + password);
+    console.log("request's password: " + password);
 
-//    var db = req.db;
-//    db.collection('userlist').find().toArray(function (err, items) {
-//        res.json(items);
-//    });
-    var msg = "hi " + username + "! Welcome to Ecometrix";
-    if (username == "lucas" && password == "81dc9bdb52d04dc20036dbd8313ed055") {
-        console.log("lucas verified!");
-        msg = '';
-    }
-    else if (password == "4a7d1ed414474e4033ac29ccb8653d9b" && username == "mtshomsky") {
-        console.log("mike verified!");
-        msg = '';
-    }
-    else {
-        msg = 'username/password not verified.';
-        console.log("password not verified!");
-    }
+    // test verfication with db
+    db.collection('userlist').find({
+        username: username
+    }).toArray(function(err, items) {
+        console.log("retrieving items:");
+        console.log(items);
 
-    res.send({msg: msg});
-    // res.send(
-    //     (err === null) ? { msg: 'Done with verfications' } : { msg: err }
-    // );
+        var msg = '';
 
-    // console.log("verifying router username: " + req.body.username); // Undefined
-    // console.log("verifying router password: " + req.body.password);
-    // if username
-    //   find user from their username
-    //   if found, return user token
-    //   else, softfail // flexible definition
-    // if token // separate route to verify token? use canned token?
-    //   check if valid
-    //     return token
-    //   else return invalidation
-    
+        if (items.length == 0) {
+            console.log("No items match the username.");
+            msg = "invalid username";
+        } else if (items[0].password == password) {
+            // Log the matching record information
+            console.log("first item:");
+            console.log(items[0]);
+            console.log("first item password:");
+            console.log(items[0].password);
+
+            console.log("Password matches");
+            msg = '';
+            console.log("message is: ");
+            console.log(msg);
+        } else {
+            console.log("Password does not match");
+            msg = "invalid password";
+            console.log("message is: ");
+            console.log(msg);
+        }
+        console.log("Sending message: " + msg);
+        res.send({
+            msg: msg
+        });
+        // res.json({msg: msg});
+        // res.json(items);
+    });
 });
 
 /*
@@ -106,32 +101,51 @@ router.get('/verify', function(req, res) {
 router.post('/adduser', function(req, res) {
     var db = req.db;
     var body = req.body;
-    console.log("adding new user: ");
+    console.log("new user request: ");
     console.log(body);
+    var username = body.username;
+    console.log("requested username: ");
+    console.log(username);
+    
+    // value of 'msg' determines result of the insert.
+    var msg = '';
+    // Return error if the username is already in use.
+    db.collection('userlist').find({
+        username: username
+    }).toArray(function(err, items) {
+        console.log("retrieving items:");
+        console.log(items);
+
+        if (items.length == 0) {
+            // Our message is good - no errors
+            console.log("No items match the username, proceed!");
+        } else {
+            msg = "That username is taken! Please choose another username.";
+        }
+        console.log("message after user verification is: ");
+        console.log(msg);
+        // console.log("Sending message: " + msg);
+        res.send({
+            msg: msg
+        });
+        // res.json({msg: msg});
+        // res.json(items);
+    });
+
     db.collection('userlist').insert(body, function(err, result) {
         res.send(
-            (err === null) ? { msg: '' } : { msg: err }
+            (err === null) ? {
+                msg: msg
+            } : {
+                msg: err
+            }
         );
     });
 });
 
-/*
-//  * POST to adduser
-//  */
-// router.post('/adduser', function(req, res) {
-//     var db = req.db;
-//     db.collection('userlist').insert(req.body, function(err, result){
-//         res.send(
-//             (err === null) ? { msg: '' } : { msg: err }
-//         );
-//     });
-// })
-;
-
-
 /* TEST for username listing. */
 router.get('/userToken', function(req, res) {
-    var items ='{"token": "md5hashtest"}';
+    var items = '{"token": "md5hashtest"}';
     res.json(items);
 });
 
@@ -142,10 +156,12 @@ router.delete('/deleteuser/:id', function(req, res) {
     var db = req.db;
     var userToDelete = req.params.id;
     db.collection('userlist').removeById(userToDelete, function(err, result) {
-        res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
+        res.send((result === 1) ? {
+            msg: ''
+        } : {
+            msg: 'error: ' + err
+        });
     });
 });
 
-module.exports = router;/**
- * Created by lucas on 6/19/14.
- */
+module.exports = router;
