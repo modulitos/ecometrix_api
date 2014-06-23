@@ -11,14 +11,17 @@ block content
         #userInfo
             h2 User Info
             p
-                strong Name:
-                |  <span id='userInfoName'></span>
+                strong Username:
+                |  <span id='userInfoUsername'></span>
+                br
+                strong FullName:
+                |  <span id='userInfoFullName'></span>
                 br
                 strong Age:
                 |  <span id='userInfoAge'></span>
                 br
-                strong Gender:
-                |  <span id='userInfoGender'></span>
+                strong Email:
+                |  <span id='userInfoEmail'></span>
                 br
                 strong Location:
                 |  <span id='userInfoLocation'></span>
@@ -39,14 +42,14 @@ block content
         h2 Add User
         #addUser
             fieldset
-                input#inputUserName(type='text', placeholder='Username')
+                input#inputUsername(type='text', placeholder='Username')
                 input#inputUserEmail(type='text', placeholder='Email')
                 br
-                input#inputUserFullname(type='text', placeholder='Full Name')
+                input#inputUserFullName(type='text', placeholder='Full Name')
                 input#inputUserAge(type='text', placeholder='Age')
                 br
                 input#inputUserLocation(type='text', placeholder='Location')
-                input#inputUserGender(type='text', placeholder='gender')
+                input#inputUserPassword(type='text', placeholder='Password')
                 br
                 button#btnAddUser Add User
         // /ADD USER

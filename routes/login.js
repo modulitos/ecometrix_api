@@ -100,22 +100,39 @@ router.get('/verify', function(req, res) {
     
 });
 
-/* TEST for username listing. */
-router.get('/userToken', function(req, res) {
-    var items ='{"token": "md5hashtest"}';
-    res.json(items);
-});
-
 /*
-// * POST to adduser.
+// * POST to login/adduser.
  */
 router.post('/adduser', function(req, res) {
     var db = req.db;
-    db.collection('userlist').insert(req.body, function(err, result){
+    var body = req.body;
+    console.log("body is: ");
+    console.log(body);
+    db.collection('userlist').insert(body, function(err, result) {
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
     });
+});
+
+/*
+//  * POST to adduser
+//  */
+// router.post('/adduser', function(req, res) {
+//     var db = req.db;
+//     db.collection('userlist').insert(req.body, function(err, result){
+//         res.send(
+//             (err === null) ? { msg: '' } : { msg: err }
+//         );
+//     });
+// })
+;
+
+
+/* TEST for username listing. */
+router.get('/userToken', function(req, res) {
+    var items ='{"token": "md5hashtest"}';
+    res.json(items);
 });
 
 /*

@@ -14,7 +14,10 @@ router.get('/userlist', function(req, res) {
  */
 router.post('/adduser', function(req, res) {
     var db = req.db;
-    db.collection('userlist').insert(req.body, function(err, result){
+    var body = req.body;
+    console.log("body is: ");
+    console.log(body);
+    db.collection('userlist').insert(body, function(err, result){
         res.send(
             (err === null) ? { msg: '' } : { msg: err }
         );
