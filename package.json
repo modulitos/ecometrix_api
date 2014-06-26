@@ -12,8 +12,9 @@
     "cookie-parser": "~1.0.1",
     "body-parser": "~1.0.0",
     "debug": "~0.7.4",
-        "jade": "*",
-        "mongodb": "*",
-        "mongoskin": "*"
+    "jade": "*",
+    "mongodb": "*",
+    "mongoskin": "*",
+    "express-session": "~1.5.1"
   }
 }
