@@ -49,6 +49,13 @@ var router = express.Router();
 // route with parameters (http://localhost:3002/verify/:username)
 // router.get('/verify/:userinfo', function(req, res) {
 router.get('/verify', function(req, res) {
+    console.log("request to /login/verify received, cookie:");
+    console.log(req.session);
+    var m=req.session.isLogged || 0;//isLogged is stored in session over here
+    req.session.isLogged = m+1;
+    console.log('req.session.isLogged:');
+    console.log(req.session.isLogged);
+
     var db = req.db;
     console.log("verifying...");
     // get request info
@@ -99,6 +106,13 @@ router.get('/verify', function(req, res) {
 // * POST to login/adduser.
  */
 router.post('/adduser', function(req, res) {
+    console.log("request to /login/adduser received, cookie:");
+    console.log(req.session);
+    var m=req.session.isLogged || 0;//isLogged is stored in session over here
+    req.session.isLogged = m+1;
+    console.log('req.session.isLogged:');
+    console.log(req.session.isLogged);
+
     var db = req.db;
     var body = req.body;
     console.log("new user request: ");

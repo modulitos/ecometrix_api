@@ -4,9 +4,15 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// Database
+// Database Setup
 var mongo = require('mongoskin');
-var db = mongo.db("mongodb://localhost:27017/nodetest2", {native_parser:true});
+var db = mongo.db("mongodb://localhost:27017/nodetest2", 
+{native_parser:true, auto_reconnect: true});
+
+// Session Management - store-based sessions using MongoStore
+var mongoUrl = "mongodb://localhost:27017/nodetest2";
+var expressSession = require('express-session');
+var MongoStore = require('connect-mongo')(expressSession);
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -22,18 +28,35 @@ app.set('view engine', 'jade');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-// app.use(express.json());
-// app.use(express.bodyParser());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// storage
+// app.use(express.session); // we are using expressSession below (with MongoStore)
+// app.use(cookieParser); // causes a hang
+// app.use(express.session);
+// app.use(express.json());
+// app.use(express.bodyParser());
 // app.use(express.static(path.join(__dirname, 'public/app')));
+
+app.use(expressSession({
+    secret: 's3cretc0de',
+    // clear_interval: 3600
+    store: new MongoStore({
+        url: mongoUrl
+        // cookie: { maxAge: 24 * 60 * 60 * 1000 },
+    }, function () {
+        console.log("db connection open");
+    })
+}));
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
     req.db = db;
     next();
 });
+
 
 app.use('/', routes);
 app.use('/users', users);

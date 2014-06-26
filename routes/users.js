@@ -3,6 +3,13 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/userlist', function(req, res) {
+    console.log("request to /users/userlist received, cookie:");
+    console.log(req.session);
+    var m=req.session.isLogged || 0;//isLogged is stored in session over here
+    req.session.isLogged = m+1;
+    console.log('req.session.isLogged:');
+    console.log(req.session.isLogged);
+    
     var db = req.db;
     db.collection('userlist').find().toArray(function (err, items) {
         res.json(items);
