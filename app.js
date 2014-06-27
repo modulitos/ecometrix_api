@@ -9,16 +9,16 @@ var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/nodetest2", 
 {native_parser:true, auto_reconnect: true});
 
-// Mongoose setup, if needed
-// var mongoose = require('mongoose').Mongoose;
-// var db = mongoose.connect('mongodb://localhost/:27017/nodetest2');
 
 // Session Management - store-based sessions using MongoStore
 var mongoUrl = "mongodb://localhost:27017/nodetest2";
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
 
-//Mongoose Model and db setup
+//Mongoose Model and db setup - (JUST IN CASE)
+  // Mongoose setup, if needed
+  // var mongoose = require('mongoose').Mongoose;
+  // var db = mongoose.connect('mongodb://localhost/:27017/nodetest2');
   // Document = require('./models.js').Document(db);
   // app.configure('development', function() {
   //   app.set('db-uri', 'mongodb://localhost/nodepad-development');
@@ -37,7 +37,9 @@ var MongoStore = require('connect-mongo')(expressSession);
   // app.use(express.session({
   //   store: mongoStore(mongoStoreConnectionArgs())
   // }));
+// End Mongoose stuff.
 
+// Assign routes to or urls.
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var posts = require('./routes/posts');
@@ -56,14 +58,7 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// storage
-// app.use(express.session); // we are using expressSession below (with MongoStore)
-// app.use(cookieParser); // causes a hang
-// app.use(express.session);
-// app.use(express.json());
-// app.use(express.bodyParser());
-// app.use(express.static(path.join(__dirname, 'public/app')));
-
+// Set up session store.
 app.use(expressSession({
     secret: 's3cretc0de',
     // clear_interval: 3600
@@ -81,6 +76,7 @@ app.use(function(req,res,next){
     next();
 });
 
+// Join our routing urls with our app.
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
