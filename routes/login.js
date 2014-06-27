@@ -59,6 +59,13 @@ router.get('/verify', function(req, res) {
             req.session.username = username;
             req.session.token = req.query.token;
             // req.session._id = req.query.token;
+            // Session testing: Store the number of times that the user has logged in.
+            console.log("request to /users/userlist received, cookie:");
+            console.log(req.session);
+            var m=req.session.isLogged || 0;
+            req.session.isLogged = m+1;
+            console.log('req.session.isLogged:');
+            console.log(req.session.isLogged);
 
             // Log the matching record information
             console.log("first item:");
@@ -118,19 +125,16 @@ router.post('/adduser', function(req, res) {
             console.log("Session username: %s, session token: %s", username, req.query.token);
             req.session.username = username;
             req.session.token = req.query.token;
-            // req.session._id = req.query.token;
+            req.session.isLogged = 0;
 
         } else {
             msg = "That username is taken! Please choose another username.";
         }
         console.log("message after user verification is: ");
         console.log(msg);
-        // console.log("Sending message: " + msg);
         res.send({
             msg: msg
         });
-        // res.json({msg: msg});
-        // res.json(items);
     });
 
     db.collection('userlist').insert(body, function(err, result) {

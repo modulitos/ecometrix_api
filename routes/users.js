@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/userlist', function(req, res) {
+    // Session testing: Store the number of times that the user has logged in.
     console.log("request to /users/userlist received, cookie:");
     console.log(req.session);
     var m=req.session.isLogged || 0;//isLogged is stored in session over here
@@ -41,12 +42,5 @@ router.delete('/deleteuser/:id', function(req, res) {
         res.send((result === 1) ? { msg: '' } : { msg:'error: ' + err });
     });
 });
-
-// /* GET posts listing. */
-// router.get('/posts', function(req, res) {
-//     var items = [{'hey':'you'},{'hey':'me'}] ;
-//     res.json(items);
-// });
-
 
 module.exports = router;
