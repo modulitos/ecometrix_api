@@ -4,15 +4,39 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-// Database Setup
+// Database Setup with MongoSkin
 var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/nodetest2", 
 {native_parser:true, auto_reconnect: true});
+
+// Mongoose setup, if needed
+// var mongoose = require('mongoose').Mongoose;
+// var db = mongoose.connect('mongodb://localhost/:27017/nodetest2');
 
 // Session Management - store-based sessions using MongoStore
 var mongoUrl = "mongodb://localhost:27017/nodetest2";
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
+
+//Mongoose Model and db setup
+  // Document = require('./models.js').Document(db);
+  // app.configure('development', function() {
+  //   app.set('db-uri', 'mongodb://localhost/nodepad-development');
+  // });
+
+  // var db = mongoose.connect(app.set('db-uri'));
+
+  // function mongoStoreConnectionArgs() {
+  //   return { dbname: db.db.databaseName,
+  //            host: db.db.serverConfig.host,
+  //            port: db.db.serverConfig.port,
+  //            username: db.uri.username,
+  //            password: db.uri.password };
+  // }
+
+  // app.use(express.session({
+  //   store: mongoStore(mongoStoreConnectionArgs())
+  // }));
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -47,7 +71,7 @@ app.use(expressSession({
         url: mongoUrl
         // cookie: { maxAge: 24 * 60 * 60 * 1000 },
     }, function () {
-        console.log("db connection open");
+        console.log("db session connection open");
     })
 }));
 
@@ -57,19 +81,10 @@ app.use(function(req,res,next){
     next();
 });
 
-
 app.use('/', routes);
 app.use('/users', users);
 app.use('/posts', posts);
 app.use('/login', login);
-
-//
-// app.configure(function () {
-  // app.use(express.static(__dirname + '/static'));
-  // app.use(express.bodyParser());
-  // app.use(app.router);
-// });
-//
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -101,6 +116,5 @@ app.use(function(err, req, res, next) {
         error: {}
     });
 });
-
 
 module.exports = app;
