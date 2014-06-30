@@ -9,35 +9,10 @@ var mongo = require('mongoskin');
 var db = mongo.db("mongodb://localhost:27017/nodetest2", 
 {native_parser:true, auto_reconnect: true});
 
-
 // Session Management - store-based sessions using MongoStore
 var mongoUrl = "mongodb://localhost:27017/nodetest2";
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
-
-//Mongoose Model and db setup - (JUST IN CASE)
-  // Mongoose setup, if needed
-  // var mongoose = require('mongoose').Mongoose;
-  // var db = mongoose.connect('mongodb://localhost/:27017/nodetest2');
-  // Document = require('./models.js').Document(db);
-  // app.configure('development', function() {
-  //   app.set('db-uri', 'mongodb://localhost/nodepad-development');
-  // });
-
-  // var db = mongoose.connect(app.set('db-uri'));
-
-  // function mongoStoreConnectionArgs() {
-  //   return { dbname: db.db.databaseName,
-  //            host: db.db.serverConfig.host,
-  //            port: db.db.serverConfig.port,
-  //            username: db.uri.username,
-  //            password: db.uri.password };
-  // }
-
-  // app.use(express.session({
-  //   store: mongoStore(mongoStoreConnectionArgs())
-  // }));
-// End Mongoose stuff.
 
 // Assign routes to or urls.
 var routes = require('./routes/index');
@@ -61,9 +36,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Set up session store.
 app.use(expressSession({
     secret: 's3cretc0de',
+    // Just in case we need it:
     // clear_interval: 3600
     store: new MongoStore({
         url: mongoUrl
+        // Just in case we need it:
         // cookie: { maxAge: 24 * 60 * 60 * 1000 },
     }, function () {
         console.log("db session connection open");
