@@ -1,9 +1,16 @@
 var express = require('express');
 var router = express.Router();
 
-// * Resume the user's session. */
-// route with parameters (http://localhost:3002/verify/:username)
-// router.get('/verify/:userinfo', function(req, res) {
+/*
+ * 'login.js' handles interaction with the 'userlist' and 'sessions' collections.
+ * It verifies users automatically through sessions or manually through the 
+ * login page.
+ */
+
+// LMS: If needed, we can create a route with parameters (ie: /login/resumeSession/:username)
+
+// Resume the user's session based on the existence of a session.
+// Sessions are implemented with MongoStore.
 router.get('/resumeSession', function(req, res) {
     console.log("request to /login/resumeSession received, session:");
     console.log(req.session);
@@ -13,11 +20,11 @@ router.get('/resumeSession', function(req, res) {
     var msg = '';
     var username = '';
     if (!req.session.username) {
-        // redirect to login page
+        // Redirect to login page
         console.log("No active session detected, redirecting to login page.");
-        msg = "No active session detected, redirecting to login page.";
+        msg = "Redirecting to login page.";
     } else {
-        // redirect to app
+        // Proceed to app
         console.log("username is valid, redirecting to main app.");
         username = req.session.username;
     }
@@ -26,14 +33,13 @@ router.get('/resumeSession', function(req, res) {
 });
 
 // * VERIFY users listing. */
-// route with parameters (http://localhost:3002/login/verify/:username)
-// router.get('/verify/:userinfo', function(req, res) {
+// Check username and password to allow user access to the app.
 router.get('/verify', function(req, res) {
     console.log("request to /login/verify received, session:");
     console.log(req.session);
-
     var db = req.db;
     console.log("verifying...");
+
     // get request info
     var username = req.query.username;
     console.log("request's username: " + username);
@@ -48,21 +54,25 @@ router.get('/verify', function(req, res) {
         console.log(items);
 
         var msg = '';
-
+        
+        // The request's username is not in our 'userlist' collection.
         if (items.length == 0) {
             console.log("No items match the username.");
             msg = "invalid username";
-        } else if (items[0].password == password) {
+        }
+        // We have a username match and a (hashed) password match.
+        else if (items[0].password == password) 
+        {
             // Update the session token with username and session token:
             console.log("Updating session token.");
             console.log("Session username: %s, session token: %s", username, req.query.token);
             req.session.username = username;
             req.session.token = req.query.token;
-            // req.session._id = req.query.token;
+
             // Session testing: Store the number of times that the user has logged in.
             console.log("request to /users/userlist received, cookie:");
             console.log(req.session);
-            var m=req.session.isLogged || 0;
+            var m = req.session.isLogged || 0;
             req.session.isLogged = m+1;
             console.log('req.session.isLogged:');
             console.log(req.session.isLogged);
@@ -77,7 +87,10 @@ router.get('/verify', function(req, res) {
             msg = '';
             console.log("message is: ");
             console.log(msg);
-        } else {
+        }
+        // Username is recognized, but password does not match
+        else 
+        {
             console.log("Password does not match");
             msg = "invalid password";
             console.log("message is: ");
@@ -91,7 +104,8 @@ router.get('/verify', function(req, res) {
 });
 
 /*
-// * POST to login/adduser.
+ * POST to login/adduser.
+ * Create a new user with the given information. Create a new session as well.
  */
 router.post('/adduser', function(req, res) {
     console.log("request to /login/adduser received, req.session:");
@@ -114,20 +128,26 @@ router.post('/adduser', function(req, res) {
     }).toArray(function(err, items) {
         console.log("retrieving userlist items (if any):");
         console.log(items);
-
+        
+        // The username is not already taken (ie: it is not already in the 'userlist' collection)
         if (items.length == 0) {
             // Our request is good - no username conflicts. Proceed!
             console.log("No items match the username, proceed!");
             
             // Add the session to our sessions collection.
-            // Update the session token with username and session token:
+            // Initialize the session with relevant fields.
             console.log("Updating session token.");
             console.log("Session username: %s, session token: %s", username, req.query.token);
             req.session.username = username;
             req.session.token = req.query.token;
             req.session.isLogged = 0;
+            // TODO: enable token persistance across
+            // multiple devices.
+            req.session.loginToken = req.token;
 
-        } else {
+        } 
+        else  // Username is taken
+        {
             msg = "That username is taken! Please choose another username.";
         }
         console.log("message after user verification is: ");
@@ -137,6 +157,7 @@ router.post('/adduser', function(req, res) {
         });
     });
 
+    // Insert the request's data into the 'userlist' collection.
     db.collection('userlist').insert(body, function(err, result) {
         console.log("inserting into userlist...");
         res.send(
@@ -149,15 +170,16 @@ router.post('/adduser', function(req, res) {
     });
 });
 
-/*
+/* 
+ * TODO:
  * DELETE to /login/deleteuser.
- * This is not being used. Users do not yet have the ability to delete their profiles.
+ * This is not being used. Users do not yet have the ability to delete profiles.
  */
 router.delete('/deleteuser/:id', function(req, res) {
     console.log("request to /login/deleteuser received, session:");
     console.log(req.session);
 
-    // TODO: Should be use the db to remove?
+    // TODO: Should be use the db to remove the session record here?
     // check whether this works..
     req.session.destroy(function(err) {
         console.log("destroying session.");

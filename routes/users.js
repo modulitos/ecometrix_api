@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+/*
+ * "users.js" handles requests to and from the 'userlist' collection.
+ */
 
 /* GET users listing. */
 router.get('/userlist', function(req, res) {
