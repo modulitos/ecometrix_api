@@ -15,7 +15,6 @@
         "jade": "*",
         "mongodb": "*",
         "mongoskin": "*",
-        "mongoose": "*",
         "connect-mongo": "*",
         "express-session": "~1.5.1"
     }
