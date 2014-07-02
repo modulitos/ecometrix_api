@@ -8,7 +8,6 @@ var router = express.Router();
 
 /* GET posts listing. */
 router.get('/', function(req, res) {
-    // var items = [{'hey':'you'},{'hey':'me'}];
     var items = {
         "data": [{
             "type": "question",
@@ -41,7 +40,6 @@ router.get('/', function(req, res) {
 });
 
 router.get('/1', function(req, res) {
-    // var items = [{'hey':'you'},{'hey':'me'}];
     var items = {
         "data": [{
             "type": "question",
@@ -73,7 +71,6 @@ router.get('/1', function(req, res) {
 });
 
 router.get('/2', function(req, res) {
-    // var items = [{'hey':'you'},{'hey':'me'}];
     var items = {
         "data": [{
             "type": "question",
