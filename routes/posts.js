@@ -8,20 +8,20 @@ var router = express.Router();
 
 /* GET posts listing. */
 router.get('/', function(req, res) {
+
     var items = {
         "data": [{
             "type": "question",
-            "content": "rq1.content",
-            "info": "rq1.info",
+            "content": "Lifestyle habits",
+            "info": "Are your showers longer than 10 minutes?rq1.info",
             "btns": ["yes", "no"],
-            "motivation": "m1"
+            "motivation": "Recommended shower times are less than 8 mins. Shortening your shower by just a minute or two can save up to 150 gallons per month. Use a timer to set a limit to your shower, and stick to it!"
         }, {
             "type": "question",
-            "content": "rq2.content",
-            "info": "rq2.info",
+            "content": "Housing",
+            "info": "Do you live in a house or apartment?",
             "btns": ["yes", "no"],
-
-            "motivation": "m2"
+            "motivation": "Apartments conserve much more energy through shared utilities and closer living quarters. Houses can often compensate by living with roommates and family. "
         }, {
             "type": "twitter",
             "content": "ttr1.content",
@@ -30,10 +30,10 @@ router.get('/', function(req, res) {
             "motivation": "ttrm1"
         }, {
             "type": "question",
-            "content": "rq3.content",
-            "info": "rq3.info",
+            "content": "Social Living",
+            "info": "Do you live with another person?",
             "btns": ["yes", "no"],
-            "motivation": "m3"
+            "motivation": "Communal living bolsters sustainability and reduces our carbon footprint through sharing resources. Whether you are sharing food, heating, or trips to the grocery store, having roommates encourages a sustainable lifestyle. [roommate sharing adds]"
         }]
     };
     res.json(items);
@@ -43,28 +43,28 @@ router.get('/1', function(req, res) {
     var items = {
         "data": [{
             "type": "question",
-            "content": "How long do you spend in the shower?",
-            "info": "Did you know that the average shower time is 4 minutes?",
+            "content": "Lifestyle Habits",
+            "info": "Have you taken a plane trip for vacation or holiday in the past 6 months?",
             "btns": ["yes", "no"],
-            "motivation": "Reduce your shower time now!"
+            "motivation": "A plane is often the only way to travel, but planes also consume prodigious amounts of fuel. Consider making your next trip a local destination and arranging travel only when needed. [local tourist adds]"
         }, {
             "type": "question",
-            "content": "How many roommates do you live with?",
-            "info": "You should have an average of 1 roommate per 700 sq. ft. of your home. If you do not know your home size, find out now! http://www.zillow.com/homes/",
+            "content": "Lifestyle Habits",
+            "info": "Do you eat meat more than 3 days per week?",
             "btns": ["yes", "no"],
-            "motivation": "Share living quarters with others to increase your sustainablity!"
-        }, {
-            "type": "twitter",
-            "content": "I just took a 5 minute shower!",
-            "info": "At this rate, I save 2 hours every month!",
-            "btns": ["yes", "no"],
-            "motivation": "Seattle Public Utilities just gave you a $10 credit on your next bill!"
+            "motivation": "The high demand for meat has created a very inefficient food industry, and lowering our consumption of meat is the most effective way to curb these impacts. Additionally, less meat will provide a better health benefit to most people because our bodies are not evolved to eat the amount of meat we crave. So, supplement your diet with vegetables! [vegetarian food ads]"
         }, {
             "type": "question",
-            "content": "rq3.content",
-            "info": "rq3.info",
+            "content": "Housing",
+            "info": "Does your house or apartment have double pane glass windows?",
             "btns": ["yes", "no"],
-            "motivation": "m3"
+            "motivation": "If not, replace them today! Windows are literally holes in the wall that deregulate your indoor temperature, raising electricity consumption for heating and air conditioning. Double pane glass and vinyl frame windows improve your home's insulation! [eco-friendly window ads]"
+        }, {
+            "type": "question",
+            "content": "water",
+            "info": "Do you utilize greywater to maximize water-efficiency?",
+            "btns": ["yes", "no"],
+            "motivation": "Greywater is a unique way to recycle water from showers, sinks, and laundry to maximize water usage.  A desirable practice in drought sticken areas, water is recycled from grey sources via modified plumbing.  There is a potential to use this water for watering small gardens.  [eco-friendly window ads]"
         }]
     };
     res.json(items);
@@ -74,28 +74,34 @@ router.get('/2', function(req, res) {
     var items = {
         "data": [{
             "type": "question",
-            "content": "Index2 eco questions!",
-            "info": "Index2 eco info!",
+            "content": "waste",
+            "info": "Do you use a wormbin to compost?",
             "btns": ["yes", "no"],
-            "motivation": "Index2 eco motivation!"
+            "motivation": "Worm bins provide an efficient means of turning waste product into nutrient rich soil (worm castings) and liquid fertilizer (worm tea).  The most common worm used for this is the red wiggler.  Worm bins are common enough to be purchased from your local hardware store, online, or self made.  They’re desirable because the compost has less odor than a purely microbial compost bin."
         }, {
             "type": "question",
-            "content": "More index2 content...",
-            "info": "More index2 info...",
+            "content": "waste",
+            "info": "Do you use municipal compost?",
             "btns": ["yes", "no"],
-            "motivation": "more index2 motivations..."
-        }, {
-            "type": "twitter",
-            "content": "Index2 twitter content!",
-            "info": "Index2 twitter info!",
-            "btns": ["yes", "no"],
-            "motivation": "Index2 twitter motivation"
+            "motivation": "Composting is an important to way to return organic nutriment back to farming.  Most large cities provide composting services, while smaller areas may have a subscription service for composting."
         }, {
             "type": "question",
-            "content": "i2.c3",
-            "info": "i2.i3",
+            "content": "waste",
+            "info": "Do you use use a kitchen composter (ceramic-bin)?",
             "btns": ["yes", "no"],
-            "motivation": "i2.m3"
+            "motivation": "Composting is an important to way to return organic nutriment back to gardening.  Composting your organic leftovers can be as simple as placing organic waste into a ceramic bin and transferring to your garden once composted.  Kitchen composters have odor control filters to keep .  "
+        }, {
+            "type": "question",
+            "content": "waste",
+            "info": "Do you use a Bokashi composter (plastic-bin + additive)?",
+            "btns": ["yes", "no"],
+            "motivation": "Bokashi is a low-odor way to return organic nutrients back to your lawn and garden using a high carbon microbe rich additive to your composting kitchen wast.  Composting your organic leftovers can be as simple as placing organic waste into a plastic bin and transferring to your garden once composted. [eco-friendly window ads]"
+        }, {
+            "type": "question",
+            "content": "waste",
+            "info": "Do you use grinds from your local coffee shop to fertilize your garden or potted plants?",
+            "btns": ["yes", "no"],
+            "motivation": "Coffee grinds are a great way to add nutrients to your garden and increase soil acidity.  You can add your coffee grinds directly to topsoil or mix it in.  It is common for coffee shops to save or share grinds; ask your barista to set aside coffee grinds for you to add to your garden. [eco-friendly window ads]"
         }]
     };
     res.json(items);
