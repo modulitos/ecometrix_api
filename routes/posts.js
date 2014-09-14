@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
         "data": [{
             "type": "question",
             "content": "Lifestyle habits",
-            "info": "Are your showers longer than 10 minutes?rq1.info",
+            "info": "Are your showers longer than 10 minutes?",
             "btns": ["yes", "no"],
             "motivation": "Recommended shower times are less than 8 mins. Shortening your shower by just a minute or two can save up to 150 gallons per month. Use a timer to set a limit to your shower, and stick to it!"
         }, {
