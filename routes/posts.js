@@ -33,7 +33,7 @@ router.get('/', function(req, res) {
             "content": "Social Living",
             "info": "Do you live with another person?",
             "btns": ["yes", "no"],
-            "motivation": "Communal living bolsters sustainability and reduces our carbon footprint through sharing resources. Whether you are sharing food, heating, or trips to the grocery store, having roommates encourages a sustainable lifestyle. [roommate sharing adds]"
+            "motivation": "Communal living bolsters sustainability and reduces our carbon footprint through sharing resources. Whether you are sharing food, heating, or trips to the grocery store, having roommates encourages a sustainable lifestyle. [roommate sharing ads]"
         }]
     };
     res.json(items);
@@ -46,7 +46,7 @@ router.get('/1', function(req, res) {
             "content": "Lifestyle Habits",
             "info": "Have you taken a plane trip for vacation or holiday in the past 6 months?",
             "btns": ["yes", "no"],
-            "motivation": "A plane is often the only way to travel, but planes also consume prodigious amounts of fuel. Consider making your next trip a local destination and arranging travel only when needed. [local tourist adds]"
+            "motivation": "A plane is often the only way to travel, but planes also consume prodigious amounts of fuel. Consider making your next trip a local destination and arranging travel only when needed. [local tourist ads]"
         }, {
             "type": "question",
             "content": "Lifestyle Habits",
