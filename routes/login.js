@@ -29,6 +29,15 @@ router.get('/resumeSession', function(req, res) {
         username = req.session.username;
     }
     console.log("sending result.");
+
+    // Want to ensure that old accounts will still function with our cumulative points.
+//    if (!req.session.cumulativePoints ||
+//        !isFinite(String(req.session.cumulativePoints))) {
+//        req.session.cumulativePoints = 0;
+//        console.log("CumulativePoints has been initialized to: " + req.session.cumulativePoints);
+//    }
+    req.session.cumulativePoints = 0; // For now, just reset the points
+
     res.send({msg:msg, username:username});
 });
 
@@ -141,6 +150,7 @@ router.post('/adduser', function(req, res) {
             req.session.username = username;
             req.session.token = req.query.token;
             req.session.isLogged = 0;
+            req.session.cumulativePoints = 0;
             // TODO: enable token persistance across
             // multiple devices.
             req.session.loginToken = req.token;
