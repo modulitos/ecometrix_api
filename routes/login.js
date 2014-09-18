@@ -158,27 +158,22 @@ router.post('/adduser', function(req, res) {
             req.session.loginToken = req.token;
 
         } 
-        else  // Username is taken
+        else  // The username is taken
         {
             msg = "That username is taken! Please choose another username.";
+            return res.send({msg:msg});
         }
-//        console.log("message after user verification is: ");
-//        console.log(msg);
-//        res.send({
-//            msg: msg
-//        });
-    });
+        if(err)
+            return res.send({msg:err});
 
-    // Insert the request's data into the 'userlist' collection.
-    db.collection('userlist').insert(body, function(err, result) {
-        console.log("inserting into userlist...");
-        res.send(
-            (err === null) ? {
-                msg: msg
-            } : {
-                msg: err
-            }
-        );
+        // Insert the request's data into the 'userlist' collection.
+        db.collection('userlist').insert(body, function(err, result) {
+            console.log("inserting into userlist...");
+            if(err)
+                return res.send({msg:err});
+            //everything was ok send msg
+            return res.send({msg:msg});
+        });
     });
     console.log("message after user verification is: ");
     console.log(msg);
