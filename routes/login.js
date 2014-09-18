@@ -146,9 +146,11 @@ router.post('/adduser', function(req, res) {
             // Add the session to our sessions collection.
             // Initialize the session with relevant fields.
             console.log("Updating session token.");
-            console.log("Session username: %s, session token: %s", username, req.query.token);
+//            console.log("Session username: %s, session token: %s", username, req.query.token);
+            console.log("Session username: %s, session token: %s", username, req.body.token);
             req.session.username = username;
-            req.session.token = req.query.token;
+//            req.session.token = req.query.token;
+            req.session.token = req.body.token;
             req.session.isLogged = 0;
             req.session.cumulativePoints = 0;
             // TODO: enable token persistance across
@@ -160,11 +162,11 @@ router.post('/adduser', function(req, res) {
         {
             msg = "That username is taken! Please choose another username.";
         }
-        console.log("message after user verification is: ");
-        console.log(msg);
-        res.send({
-            msg: msg
-        });
+//        console.log("message after user verification is: ");
+//        console.log(msg);
+//        res.send({
+//            msg: msg
+//        });
     });
 
     // Insert the request's data into the 'userlist' collection.
@@ -178,6 +180,11 @@ router.post('/adduser', function(req, res) {
             }
         );
     });
+    console.log("message after user verification is: ");
+    console.log(msg);
+//    res.send({
+//        msg: msg
+//    });
 });
 
 /* 
