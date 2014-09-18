@@ -7,10 +7,10 @@ router.get('/', function(req, res) {
     res.sendFile('app.html', { root: path.join(__dirname, '../public') });
 });
 
-// /* Debug and manage db records */
-// router.get('/index', function(req, res) {
-//     res.render('index', { title: 'Luke\'s Express Test' });
-// });
+/* Debug and manage db records */
+router.get('/s3cretSp0t', function(req, res) {
+     res.render('index', { title: 'Ecometrix DB manipulation zone' });
+});
 
 // Route middleware that will happen on every request.
 // This middleware logs message to console everytime a request is made.
