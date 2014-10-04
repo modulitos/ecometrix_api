@@ -29,15 +29,6 @@ router.get('/', function(req, res) {
             ],
             "motivation": "Apartments conserve much more energy through shared utilities and closer living quarters. Houses can often compensate by living with roommates and family. "
         }, {
-            "type": "twitter",
-            "content": "ttr1.content",
-            "info": "ttr2.info",
-            "btns": [
-                {"type": "yes", "value": "1"},
-                {"type": "no", "value": "0"}
-            ],
-            "motivation": "ttrm1"
-        }, {
             "type": "question",
             "content": "Social Living",
             "info": "Do you live with another person, like a roommate?",
