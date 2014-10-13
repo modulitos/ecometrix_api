@@ -4,7 +4,7 @@ var path = require('path');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-    res.sendFile('app.html', { root: path.join(__dirname, '../public') });
+    res.sendFile('index.html', { root: path.join(__dirname, '../public') });
 });
 
 /* Debug and manage db records */
