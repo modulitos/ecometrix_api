@@ -1,0 +1,3 @@
+[submodule "ecometrix_site"]
+	path = ecometrix_site
+	url = git@github.com:LukeSwart/ecometrix_site.git
